@@ -1,0 +1,75 @@
+#!/bin/bash
+
+########################
+#Created: 2019/10/28
+#Author: Nicolas Gabriel Teixeira
+########################
+
+connect(){
+    CONFIG=`cat properties | grep "ID = $globalVariable" -A 5`
+    HOST=`echo $CONFIG | grep HOST | awk '{print $6}'`
+    USER=`echo $CONFIG | grep HOST | awk '{print $9}'`
+    PASS=`echo $CONFIG | grep HOST | awk '{print $12}'`
+    PORT=`echo $CONFIG | grep HOST | awk '{print $15}'`
+    SERVICES=`echo $CONFIG | grep HOST | awk '{for(i=18;i<=NF;++i)print $i}' | tr '\n' ' '`
+
+
+    echo -e "HOST --> ${HOST}"
+    echo -e "USER --> ${USER}"
+    echo -e "PASS --> ${PASS}"
+    echo -e "PORT --> ${PORT}"
+    echo -e "SERVICES --> ${SERVICES}"
+    echo -e
+    sshpass -p $PASS sudo ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT
+}
+
+verify(){
+
+    COMMANDS=`cat properties | grep "ID =" | awk '{print $3}'`
+    COMMANDS_COMPARE=`echo $COMMANDS | grep -w $globalVariable | wc -l`
+
+    if [ $COMMANDS_COMPARE -eq "0" ]
+    then
+        echo -e "conn: Comand $globalVariable not found"
+        echo -e "See 'conn --help'"
+    exit 0
+    else
+	    connect $globalVariable
+    fi
+}
+
+list(){
+    cat properties | grep "ID =" | awk '{print $3}'
+    exit 0
+}
+
+help(){
+    echo -e "Syntax"
+    echo -e
+    echo -e "conn [command]"
+    echo -e
+    echo -e
+    echo -e "Options"
+    echo -e
+    echo -e "-list  ===> List All Possible IDs"
+    echo -e
+    echo -e "--help ===> Soon Description of Commands"
+    echo -e
+    exit 0
+}
+
+# Set a variable
+globalVariable=$1
+
+if [ -z $globalVariable ]
+then 
+    echo -e "ID not found"
+    echo -e "See 'conn --help'"
+    exit 0
+else
+    case $globalVariable in
+    --help) help ;;
+    -list) list ;;
+    *) verify ;;
+    esac
+fi
