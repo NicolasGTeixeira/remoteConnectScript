@@ -6,7 +6,7 @@
 ########################
 
 connect(){
-    CONFIG=`cat properties | grep "ID = $globalVariable" -A 5`
+    CONFIG=`cat $propertiesPATH| grep "ID = $globalVariable" -A 5`
     HOST=`echo $CONFIG | grep HOST | awk '{print $6}'`
     USER=`echo $CONFIG | grep HOST | awk '{print $9}'`
     PASS=`echo $CONFIG | grep HOST | awk '{print $12}'`
@@ -25,7 +25,7 @@ connect(){
 
 verify(){
 
-    COMMANDS=`cat properties | grep "ID =" | awk '{print $3}'`
+    COMMANDS=`cat $propertiesPATH| grep "ID =" | awk '{print $3}'`
     COMMANDS_COMPARE=`echo $COMMANDS | grep -w $globalVariable | wc -l`
 
     if [ $COMMANDS_COMPARE -eq "0" ]
@@ -39,7 +39,7 @@ verify(){
 }
 
 list(){
-    cat properties | grep "ID =" | awk '{print $3}'
+    cat $propertiesPATH| grep "ID =" | awk '{print $3}'
     exit 0
 }
 
@@ -60,6 +60,7 @@ help(){
 
 # Set a variable
 globalVariable=$1
+propertiesPATH="/example/path/properties"
 
 if [ -z $globalVariable ]
 then 
