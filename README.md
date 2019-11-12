@@ -1,6 +1,6 @@
 # 1. Descrição
 
-<p>Pode ser bem chato ter que digitar <b>ssh</b> toda vez que for conectar em uma máquina, ou até mesmo, criar um script para cada máquina separadamente.</p>
+<p>Pode ser bem chato ter que digitar <b>ssh</b> toda vez que for conectar em uma máquina, ou até mesmo, criar um script para cada máquina.</p>
 Então, a ideia desse projeto é <i>centralizar</i> e <i>automatizar</i> a conexão nessas máquinas remotas, afim de melhorar a produtividade do seu dia a dia.
 
 
