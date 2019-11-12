@@ -13,13 +13,14 @@ connect(){
     PORT=`echo $CONFIG | grep HOST | awk '{print $15}'`
     SERVICES=`echo $CONFIG | grep HOST | awk '{for(i=18;i<=NF;++i)print $i}' | tr '\n' ' '`
 
-
+    echo -e "=================================="
     echo -e "HOST --> ${HOST}"
     echo -e "USER --> ${USER}"
     echo -e "PASS --> ${PASS}"
     echo -e "PORT --> ${PORT}"
     echo -e "SERVICES --> ${SERVICES}"
-    echo -e
+    echo -e "=================================="
+    
     sshpass -p $PASS sudo ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT
 }
 
@@ -32,7 +33,7 @@ verify(){
     then
         echo -e "conn: Comand $globalVariable not found"
         echo -e "See 'conn --help'"
-    exit 0
+        exit 0
     else
 	    connect $globalVariable
     fi
