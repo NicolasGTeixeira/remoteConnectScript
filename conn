@@ -5,6 +5,8 @@
 #Author: Nicolas Gabriel Teixeira
 ########################
 
+# Testes commit Space 
+
 connect(){
     CONFIG=`cat $propertiesPATH| grep "ID = $globalVariable" -A 5`
     HOST=`echo $CONFIG | grep HOST | awk '{print $6}'`
